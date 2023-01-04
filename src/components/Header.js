@@ -1,10 +1,12 @@
 import React from "react";
 import { Box, Image, Text } from "grommet";
 import { useNavigate, Link } from "react-router-dom";
+import { connect } from "react-redux";
 import cart from "./Image/cart.png";
 import profile from "./Image/profile.png";
 import reactIcon from "./Image/react.png";
-const Header = (props) => {
+
+const Header = ({ cartData }) => {
   const navigate = useNavigate();
   return (
     <Box direction="row" width="100vw">
@@ -26,7 +28,7 @@ const Header = (props) => {
             onClick={() => navigate("/cart")}
           />
         </Box>
-        <Text className="cart-count">{props?.cartData?.length}</Text>
+        <Text className="cart-count">{cartData?.length}</Text>
         <Box height="100px" width="140px">
           <Image
             src={profile}
@@ -40,4 +42,7 @@ const Header = (props) => {
     </Box>
   );
 };
-export default Header;
+const mapStateToProps = (state) => ({
+  cartData: state.cartItem,
+});
+export default connect(mapStateToProps)(Header);

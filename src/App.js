@@ -6,9 +6,9 @@ import { Provider as ReduxProvider } from "react-redux";
 import rootReducer from "./services/reducers/index";
 import Home from "./components/Home";
 import MyProfile from "./components/MyProfile";
-import ProductContainer from "./container/ProductContainer";
-import HeaderContainer from "./container/HeaderContainer";
-import CartContainer from "./container/CartContainer";
+import ProductDetails from "./components/ProductDetails";
+import Cart from "./components/Cart";
+import Header from "./components/Header";
 
 export const product = createContext();
 const store = createStore(rootReducer);
@@ -18,11 +18,11 @@ function App() {
     <div className="App">
       <ReduxProvider store={store}>
         <BrowserRouter>
-          <HeaderContainer />
+          <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="product-details" element={<ProductContainer />} />
-            <Route path="cart" element={<CartContainer />} />
+            <Route path="product-details" element={<ProductDetails />} />
+            <Route path="cart" element={<Cart />} />
             <Route path="profile" element={<MyProfile />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

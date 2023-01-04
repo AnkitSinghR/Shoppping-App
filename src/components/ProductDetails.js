@@ -1,10 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Box, Text, Image, Button } from "grommet";
+import { connect, useDispatch } from "react-redux";
 
-const ProductDetails = (props) => {
-  const { addToCartHandler, removeToCartHandler } = props;
+import { addToCart, removeToCart } from "../services/actions/action";
+
+const ProductDetails = ({ cartData }) => {
   const { state } = useLocation();
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -24,11 +27,11 @@ const ProductDetails = (props) => {
             <Text>Price: ${state?.price}</Text>
             <Button
               label="Add To Cart"
-              onClick={() => addToCartHandler(state)}
+              onClick={() => dispatch(addToCart(state))}
             />
             <Button
               label="Remove To Cart"
-              onClick={() => removeToCartHandler(state)}
+              onClick={() => dispatch(removeToCart(state))}
             />
           </Box>
         </Box>
@@ -40,4 +43,11 @@ const ProductDetails = (props) => {
     </>
   );
 };
-export default ProductDetails;
+
+const mapStateToProps = (state) => ({
+  cartData: state.cartItem,
+});
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: dispatch,
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

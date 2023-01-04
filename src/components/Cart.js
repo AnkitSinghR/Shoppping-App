@@ -1,8 +1,11 @@
 import React from "react";
 import { Box, Text, Image, Button } from "grommet";
+import { connect, useDispatch } from "react-redux";
 
-const Cart = (props) => {
-  const { cartData, removeToCartHandler } = props;
+import { removeToCart } from "../services/actions/action";
+
+const Cart = ({ cartData, removeToCartHandler }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <Box pad="small" gap="small">
@@ -10,8 +13,8 @@ const Cart = (props) => {
           My Cart
         </Text>
       </Box>
-      {cartData.length !== 0 ? (
-        cartData.map((item, index) => (
+      {cartData?.length !== 0 ? (
+        cartData?.map((item, index) => (
           <Box
             key={index}
             direction="row"
@@ -32,7 +35,7 @@ const Cart = (props) => {
             </Box>
             <Button
               label="Remove To Cart"
-              onClick={() => removeToCartHandler(cartData)}
+              onClick={() => dispatch(removeToCart(cartData))}
             />
           </Box>
         ))
@@ -44,4 +47,11 @@ const Cart = (props) => {
     </>
   );
 };
-export default Cart;
+const mapStateToProps = (state) => ({
+  cartData: state.cartItem,
+});
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
